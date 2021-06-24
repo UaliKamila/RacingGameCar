@@ -7,3 +7,5 @@
 ## Используются технологии
 - JS
 - JShint
+- HTML
+- CSS (reset.css)
