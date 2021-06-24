@@ -52,13 +52,11 @@ table {
 	height: 100px;
 	background: transparent url('./image/player2.png') center / cover no-repeat;
 	position: absolute;
-	left: 125px;
-	bottom: 10px;
 }
 
 .gameArea{
 	width: 300px;
-	height: 100vh;
+	height: 100%;
 	position: relative; /*родитель для car*/
 	margin: auto; 
 	background: #222;
@@ -71,4 +69,36 @@ table {
 	height: 50px;
 	background: #fff;
 	left: 145px; /* 300/2=150 10/2=5 150-5=145 */
+}
+
+.start{
+	position: absolute; /*чтобы не была отдельна от дороги*/
+	left: 0;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	padding: 2rem 0;
+	text-align: center;
+	z-index: 200; /*всегда сверху*/
+	color: #fff;
+	font-size: 1.5rem;
+	background: #222;
+	cursor: pointer;
+	font-family: sans-serif;
+	font-weight: 700;
+}
+
+.score{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #000;
+	padding: 1rem 0;
+	z-index: 200;
+	font-size: 1.5rem;
+	color:cornflowerblue;
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: 500;
 }

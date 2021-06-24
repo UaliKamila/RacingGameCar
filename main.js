@@ -15,6 +15,7 @@ const keys = { //название клавиш для управления
 	ArrowRight: false,
 	ArrowLeft: false
 };
+Object.preventExtensions(keys);
 
 const setting = { //первоначальные данные, запущена игра или нет
 	start: false, 
@@ -30,6 +31,8 @@ function getQuantityElements(heightElement) {//принимает парамет
 
 function startGame() {
 	start.classList.add('hide');
+	gameArea.innerHTML = ''; //перед запуском игры очищаем арену
+	
 	for (let i = 0; i < getQuantityElements(100); i++) { //линии в середине дороги, c высотой 100px
 		const line = document.createElement('div');
 		line.classList.add('line');
@@ -47,9 +50,12 @@ function startGame() {
 		enemy.style.background = 'transparent url("./image/enemy3.png") center / cover no-repeat'; //цвета других машин
 		gameArea.appendChild(enemy); //распологаем в игровом простр
 	}
-
+	setting.score = 0; 
 	setting.start = true;
 	gameArea.appendChild(car);
+	car.style.left = gameArea.offsetWidth/2 - car.offsetWidth/2; 
+	car.style.top = 'auto';
+	car.style.bottom = '10px'; //при перезапуске игры машина спускается вниз
 	setting.x = car.offsetLeft; //offsetLeft=125px, берется от края блока родителя до самого элемента(машины) 
 	setting.y = car.offsetTop; //offsetTop берется от верхней части блока до машины
 	requestAnimationFrame(playGame); 
@@ -58,6 +64,8 @@ function startGame() {
 
 function playGame(){
 	if (setting.start === true){
+		setting.score += setting.speed; //при запуске игр счет увеличив в зависим от скорости
+		score.innerHTML = 'Ваш счет:<br>' + setting.score; //выводим текст со счетом
 		moveRoad(); //движение дороги
 		moveEnemy(); //движение других машин
 		if (keys.ArrowLeft && setting.x > 0) { 
@@ -108,7 +116,21 @@ function moveRoad() {
 
 function moveEnemy() { //получит все машины в дороге
 	let enemy = document.querySelectorAll('.enemy');
+	
 	enemy.forEach(function(item){
+		let carRect = car.getBoundingClientRect(); //получает прам машины
+		let enemyRect = item.getBoundingClientRect(); //получает прам других машин
+		
+		if (carRect.top <= enemyRect.bottom && //когда наша машина приближается к бамперу другой машины
+			carRect.right >= enemyRect.left && //если наехали с правой стороны другой машины
+			carRect.left <= enemyRect.right && //если наехали с левой стороны другой машины
+			carRect.bottom >= enemyRect.top) { //если наехали спереди другой машины
+			setting.start = false; //останавливается при столкновении
+			console.warn('ДТП'); 
+			start.classList.remove('hide'); //скрыли кнопку во время клика
+			score.style.top = score.offsetHeight; //
+		}
+
 		item.y += setting.speed / 2;
 		item.style.top = item.y + 'px';
 	
@@ -118,3 +140,4 @@ function moveEnemy() { //получит все машины в дороге
 		}
 	});
 }
+
