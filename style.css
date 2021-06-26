@@ -1,3 +1,7 @@
+:root { /*чтобы каждый раз не указывать*/
+    --height-elem: 100px 
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -7,98 +11,136 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
-article, aside, details, figcaption, figure, 
+
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
+    display: block;
 }
+
 body {
-	line-height: 1;
+    line-height: 1;
+    font-family: 'Patrick Hand', cursive;
 }
+
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
+
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-/*reset.css end*/
-
-
-.hide{
-	display: none;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-.car, .enemy{
-	width: 50px;
-	height: 100px;
-	background: transparent url('./image/player2.png') center / cover no-repeat;
-	position: absolute;
+.hide {
+    display: none;
 }
 
-.gameArea{
-	width: 300px;
-	height: 100%;
-	position: relative; /*родитель для car*/
-	margin: auto; 
-	background: #222;
-	overflow: hidden; 
+.game {
+    height: 100%;
+    display: flex;
 }
 
-.line{
-	position: absolute;
-	width: 10px;
-	height: 50px;
-	background: #fff;
-	left: 145px; /* 300/2=150 10/2=5 150-5=145 */
+.start {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(50px - 2rem);
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 3px 3px 5px 1px #ccc;
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.start{
-	position: absolute; /*чтобы не была отдельна от дороги*/
-	left: 0;
-	top: 0;
-	width: 100%;
-	margin: 0;
-	padding: 2rem 0;
-	text-align: center;
-	z-index: 200; /*всегда сверху*/
-	color: #fff;
-	font-size: 1.5rem;
-	background: #222;
-	cursor: pointer;
-	font-family: sans-serif;
-	font-weight: 700;
+.btn {
+    font: inherit;
+    background-color: #ff1ef8;
+    color: black;
+    border: none;
+    cursor: pointer;
+    padding: 10px 25px;
+    border-radius: 40px;
+    
 }
 
-.score{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	background: #000;
-	padding: 1rem 0;
-	z-index: 200;
-	font-size: 1.5rem;
-	color:cornflowerblue;
-	text-align: center;
-	font-family: sans-serif;
-	font-weight: 500;
+.btn:disabled {
+    background-color: white;
+    color: rgb(221, 221, 221);
+}
+
+.score {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: -3px -3px 5px 1px #ccc;
+    height: calc(50px - 2rem);
+    padding: 1rem;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.btn:not(:last-child) {
+    margin-right: 20px;
+}
+
+.car, .enemy {
+    width: calc(var(--height-elem) / 2); 
+    height: var(--height-elem);
+    background: transparent url('./image/player2.png') center / contain no-repeat;
+    position: absolute;
+    left: 125px;
+    bottom: 10px;
+}
+
+.gameArea {
+    width: 300px;
+    position: relative;
+    margin: auto;
+    background: #000;
+    overflow: hidden;
+}
+
+.line {
+    position: absolute;
+    width: 10px;
+    height: calc(var(--height-elem) / 2);
+    background: #fff;
+    left: 145px
+}
+
+.visually-hidden {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0 !important;
+    border: 0 !important;
+    height: 1px !important; 
+    width: 1px !important; 
+    overflow: hidden;
 }
